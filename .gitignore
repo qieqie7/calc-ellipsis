@@ -1,0 +1,8 @@
+# deps
+node_modules
+
+# git
+pnpm-lock.yaml
+
+# dist
+dist
