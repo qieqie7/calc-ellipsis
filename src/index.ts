@@ -121,54 +121,58 @@ interface IParams {
     tailPlaceHolder?: number;
 }
 
-export default function calcDisplayText({ dom, text, maxHeight, tailPlaceHolder = 0, ellipsis }: IParams): string {
-    try {
-        const parentDom = dom.parentElement;
-        if (!parentDom) {
-            throw new Error(`当前dom无法处理，无父级元素`);
-        }
+// export default function calcDisplayText({ dom, text, maxHeight, tailPlaceHolder = 0, ellipsis }: IParams): string {
+//     try {
+//         const parentDom = dom.parentElement;
+//         if (!parentDom) {
+//             throw new Error(`当前dom无法处理，无父级元素`);
+//         }
 
-        let result = text;
-        const rect = dom.getBoundingClientRect();
-        if (tailPlaceHolder > rect.width) {
-            throw new Error(`tailPlaceHolder(${tailPlaceHolder})应该小于dom的宽度(${rect.width})。`);
-        }
+//         let result = text;
+//         const rect = dom.getBoundingClientRect();
+//         if (tailPlaceHolder > rect.width) {
+//             throw new Error(`tailPlaceHolder(${tailPlaceHolder})应该小于dom的宽度(${rect.width})。`);
+//         }
 
-        const cloneDom = createCloneDom(dom, rect.width);
-        parentDom.appendChild(cloneDom);
+//         const cloneDom = createCloneDom(dom, rect.width);
+//         parentDom.appendChild(cloneDom);
 
-        result = getFinallyText(cloneDom, text, rect.width, maxHeight, tailPlaceHolder);
+//         result = getFinallyText(cloneDom, text, rect.width, maxHeight, tailPlaceHolder);
 
-        // 如果文字超长了
-        if(ellipsis && result.trim() !== text.trim()) {
-            let ellipsisPlaceHolder: number = 0;
-            if (ellipsis) {
-                const cloneDom = createCloneDom(dom);
-                cloneDom.innerText = '...';
-                parentDom.appendChild(cloneDom);
-                const rect = cloneDom.getBoundingClientRect();
-                ellipsisPlaceHolder = rect.width;
-                parentDom.removeChild(cloneDom);
-            }
-    
-            const tailPlaceHolderWithEllipsis = tailPlaceHolder + ellipsisPlaceHolder;
-            if (tailPlaceHolderWithEllipsis > rect.width) {
-                throw new Error(`tailPlaceHolder(${tailPlaceHolderWithEllipsis})应该小于dom的宽度(${rect.width})。注意：ellipsis功能也会占用部分宽度。`);
-            }
+//         // 如果文字超长了
+//         if(ellipsis && result.trim() !== text.trim()) {
+//             let ellipsisPlaceHolder: number = 0;
+//             if (ellipsis) {
+//                 const cloneDom = createCloneDom(dom);
+//                 cloneDom.innerText = '...';
+//                 parentDom.appendChild(cloneDom);
+//                 const rect = cloneDom.getBoundingClientRect();
+//                 ellipsisPlaceHolder = rect.width;
+//                 parentDom.removeChild(cloneDom);
+//             }
 
-            result = getFinallyText(cloneDom, text, rect.width, maxHeight, tailPlaceHolderWithEllipsis) + '...';
+//             const tailPlaceHolderWithEllipsis = tailPlaceHolder + ellipsisPlaceHolder;
+//             if (tailPlaceHolderWithEllipsis > rect.width) {
+//                 throw new Error(`tailPlaceHolder(${tailPlaceHolderWithEllipsis})应该小于dom的宽度(${rect.width})。注意：ellipsis功能也会占用部分宽度。`);
+//             }
 
-        }
+//             result = getFinallyText(cloneDom, text, rect.width, maxHeight, tailPlaceHolderWithEllipsis) + '...';
 
-        parentDom.removeChild(cloneDom);
+//         }
 
-        return result;
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            console.warn(error.message);
-        } else {
-            console.warn('未知错误');
-        }
-        return text;
-    }
+//         parentDom.removeChild(cloneDom);
+
+//         return result;
+//     } catch (error: unknown) {
+//         if (error instanceof Error) {
+//             console.warn(error.message);
+//         } else {
+//             console.warn('未知错误');
+//         }
+//         return text;
+//     }
+// }
+
+export default function calcDisplayText(): string {
+    return 'hello world';
 }
