@@ -6,3 +6,6 @@ pnpm-lock.yaml
 
 # dist
 dist
+
+# systom
+.DS_store
