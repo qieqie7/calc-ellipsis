@@ -1,5 +1,5 @@
 {
-  "name": "calc-ellipsis",
+  "name": "get-multiline-text",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
@@ -7,6 +7,9 @@
   "scripts": {
     "build": "rollup -c"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
