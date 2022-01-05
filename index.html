@@ -9,64 +9,68 @@
             #demo1,
             #demo11,
             #demo2,
-            #demo3,
-            #demo33 {
+            #demo3 {
                 width: 180px;
                 max-height: 66px;
                 overflow: hidden;
+                background-color: blanchedalmond;
+            }
+
+            .tag {
+                padding: 0 2px;
+                font-size: 14px;
+                background-color: chartreuse;
             }
         </style>
     </head>
     <body>
         <script src="dist/index.js"></script>
 
+        <h3>测试文案不满3行的情况，标签需要紧跟文字</h3>
         <div id="demo1">
             <span id="text1"></span>
-            <span>tagtagtag</span>
+            <span class="tag">标签</span>
         </div>
         <script>
-            var text = '龙凯峰；拉斯开发零结案三分令爱';
+            var text = '这是一段只要两行的测试文案';
             text1.innerText = text;
-            var c = window.calcDisplayText({ dom: demo1, text, maxHeight: 66, tailPlaceHolder: 72.25, ellipsis: true });
+            var c = window.getMultilineText({ dom: demo1, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
             text1.innerText = c;
         </script>
         <br />
+        <h3>测试文案超过3行的情况，增加省略并显示标签</h3>
         <div id="demo11">
             <span id="text11"></span>
-            <span>tagtagtag</span>
+            <span class="tag">标签</span>
         </div>
         <script>
-            var text = '龙凯峰；拉斯开发零结案三分令爱赛季服服服服服服服服服服服不';
+            var text = '这是一段明显超出了很多字的测试文案已经超过了很多很多很多了，我自己也不知道是多少';
             text11.innerText = text;
-            var c = window.calcDisplayText({ dom: demo11, text, maxHeight: 66, tailPlaceHolder: 72.25, ellipsis: true });
+            var c = window.getMultilineText({ dom: demo11, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
             text11.innerText = c;
         </script>
         <br />
+        <h3>测试文案是英文且超过3行的情况，增加省略并显示标签</h3>
         <div id="demo2">
             <span id="text2"></span>
-            <span>tagtagtag</span>
+            <span class="tag">标签</span>
         </div>
         <script>
-            var text = 'hello hello hello hello hello hello hello hello hello hello hello';
+            var text = 'hello hello hello hello hello hello hello hello hello hello hello hello';
             text2.innerText = text;
-            var c = window.calcDisplayText({ dom: demo2, text, maxHeight: 66, tailPlaceHolder: 72.25, ellipsis: true });
+            var c = window.getMultilineText({ dom: demo2, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
             text2.innerText = c;
         </script>
         <br />
-        <div id="demo3"></div>
+        <h3>测试文案超过3行的情况，没有标签的情况</h3>
+        <div id="demo3">
+            <span id="text3"></span>
+        </div>
         <script>
-            var text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello';
-            demo3.innerText = text;
-            var c = window.calcDisplayText({ dom: demo3, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
-            demo3.innerText = c;
-        </script>
-        <br />
-        <div id="demo33"></div>
-        <script>
-            var text = '全景龙扥就SDK范爱玲赛季服领阿囧扥出去玩撒扥惊喜餐之前我耳机赛饭卡龙蛋饭吃完啃囧丁兰费SDK范爱玲赛季服群殴产妇隆安开机费成为赛肯江空单发';
-            demo33.innerText = text;
-            var c = window.calcDisplayText({ dom: demo33, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
-            demo33.innerText = c;
+            var text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello';
+            text3.innerText = text;
+            var c = window.getMultilineText({ dom: demo2, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
+            text3.innerText = c;
         </script>
         <br />
     </body>

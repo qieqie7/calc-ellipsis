@@ -121,7 +121,7 @@ interface IParams {
     tailPlaceHolder?: number;
 }
 
-export default function calcDisplayText({ dom, text, maxHeight, tailPlaceHolder = 0, ellipsis }: IParams): string {
+export default function getMultilineText({ dom, text, maxHeight, tailPlaceHolder = 0, ellipsis }: IParams): string {
     try {
         const parentDom = dom.parentElement;
         if (!parentDom) {
@@ -150,7 +150,7 @@ export default function calcDisplayText({ dom, text, maxHeight, tailPlaceHolder 
                 ellipsisPlaceHolder = rect.width;
                 parentDom.removeChild(cloneDom);
             }
-    
+
             const tailPlaceHolderWithEllipsis = tailPlaceHolder + ellipsisPlaceHolder;
             if (tailPlaceHolderWithEllipsis > rect.width) {
                 throw new Error(`tailPlaceHolder(${tailPlaceHolderWithEllipsis})应该小于dom的宽度(${rect.width})。注意：ellipsis功能也会占用部分宽度。`);
