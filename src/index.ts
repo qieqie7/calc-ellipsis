@@ -8,6 +8,9 @@ function createCloneDom(dom: HTMLElement, width?: number): HTMLElement {
     styleStr += 'left: 0;';
     styleStr += 'z-index: 1000000;';
     styleStr += 'opacity: 0;';
+    styleStr += '-ms-user-select: text;';
+    styleStr += '-webkit-user-select: text;';
+    styleStr += 'user-select: text;';
     if (typeof width === 'number') {
         styleStr += `width: ${width}px;`;
     } else {
@@ -30,7 +33,9 @@ interface IPositionInfo {
     };
 }
 
-function getPositionInfo(startX: number, startY: number, _endX: number, _endY: number): IPositionInfo {
+function getPositionInfo(_startX: number, _startY: number, _endX: number, _endY: number): IPositionInfo {
+    const startX = _startX + 1;
+    const startY = _startY + 1;
     const endX = _endX - 1;
     const endY = _endY - 1;
 

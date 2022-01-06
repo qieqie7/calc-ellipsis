@@ -1,5 +1,10 @@
 # 多行文本省略 + 标签
 
+> 优点：体积小，0依赖
+
+## 未来工作
+- 补充e2e测试，保证覆盖一些极端情况的badcase
+
 ## 使用案例
 
 ![image](https://user-images.githubusercontent.com/30360513/148229362-f9a88bbf-ba42-4200-ba81-c8c86b2f8e29.png)
