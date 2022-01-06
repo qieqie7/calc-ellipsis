@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script src="../dist/index.js"></script>
+
+        <div id="demo1">
+            <style>
+                #demo1 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
+                #demo1 .tag {padding: 0 2px;font-size: 14px;background-color: chartreuse;}
+            </style>
+            <button class="testBtn">最大3行，实际2行，标签需要紧跟文字</button>
+
+            <div class="demo">
+                <span class="text"></span>
+                <span class="tag">标签</span>
+            </div>
+
+            <script>
+                (() => {
+                    const text = '这是一段只要两行的测试文案';
+                    const demoDom = document.querySelector('#demo1 .demo');
+                    const textDom = document.querySelector('#demo1 .demo .text');
+                    textDom.innerText = text;
+                    document.querySelector('#demo1 .testBtn ').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
+                        textDom.innerText = c;
+                    }
+                })();
+            </script>
+        </div>
+
+        <div id="demo2">
+            <style>
+                #demo2 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
+                #demo2 .tag {padding: 0 2px;font-size: 14px;background-color: chartreuse;}
+            </style>
+            <button class="testBtn">测试文案超过3行的情况，增加省略并显示标签</button>
+
+            <div class="demo">
+                <span class="text"></span>
+                <span class="tag">标签</span>
+            </div>
+
+            <script>
+                (() => {
+                    const text = '这是一段明显超出了很多字的测试文案已经超过了很多很多很多了，我自己也不知道是多少';
+                    const demoDom = document.querySelector('#demo2 .demo');
+                    const textDom = document.querySelector('#demo2 .demo .text');
+                    textDom.innerText = text;
+                    document.querySelector('#demo2 .testBtn').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
+                        textDom.innerText = c;
+                    }
+                })();
+            </script>
+        </div>
+
+
+        <div id="demo3">
+            <style>
+                #demo3 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
+                #demo3 .tag {padding: 0 2px;font-size: 14px;background-color: chartreuse;}
+            </style>
+            <button class="testBtn">测试文案是英文且超过3行的情况，增加省略并显示标签</button>
+
+            <div class="demo">
+                <span class="text"></span>
+                <span class="tag">标签</span>
+            </div>
+
+            <script>
+                (() => {
+                    const text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello';
+                    const demoDom = document.querySelector('#demo3 .demo');
+                    const textDom = document.querySelector('#demo3 .demo .text');
+                    textDom.innerText = text;
+                    document.querySelector('#demo3 .testBtn').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
+                        textDom.innerText = c;
+                    }
+                })();
+            </script>
+        </div>
+
+        <div id="demo4">
+            <style>
+                #demo4 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
+            </style>
+            <button class="testBtn">测试文案超过3行的情况，没有标签的情况</button>
+
+            <div class="demo">
+                <span class="text"></span>
+            </div>
+
+            <script>
+                (() => {
+                    const text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello';
+                    const demoDom = document.querySelector('#demo4 .demo');
+                    const textDom = document.querySelector('#demo4 .demo .text');
+                    textDom.innerText = text;
+                    document.querySelector('#demo4 .testBtn').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
+                        textDom.innerText = c;
+                    }
+                })();
+            </script>
+        </div>
+    </body>
+</html>
