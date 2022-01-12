@@ -43,6 +43,14 @@ describe('e2e', () => {
         );
     });
 
+    it('头部有标签，超过3行，无标签', async () => {
+        const btnDom = await page.$('#demo5 .testBtn');
+        await btnDom?.click();
+        await expect(page.$eval('#demo5 .demo .text', (dom: any) => dom.innerHTML)).resolves.toMatch(
+            'hello hello hello hello hello hello hello hello hello hello hello...',
+        );
+    });
+
     afterAll(async () => {
         await browser.close();
     });

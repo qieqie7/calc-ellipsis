@@ -111,5 +111,29 @@
                 })();
             </script>
         </div>
+
+        <div id="demo5">
+            <style>
+                #demo5 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
+            </style>
+            <button class="testBtn">前面有占据的情况</button>
+
+            <div class="demo">
+                <span>LINK123</span><span class="text"></span>
+            </div>
+
+            <script>
+                (() => {
+                    const text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello';
+                    const demoDom = document.querySelector('#demo5 .demo');
+                    const textDom = document.querySelector('#demo5 .demo .text');
+                    textDom.innerText = text;
+                    document.querySelector('#demo5 .testBtn').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, headPlaceHolder: 61.38 ,tailPlaceHolder: 0, ellipsis: true });
+                        textDom.innerText = c;
+                    }
+                })();
+            </script>
+        </div>
     </body>
 </html>
