@@ -51,6 +51,30 @@ describe('e2e', () => {
         );
     });
 
+    it('\\ufeff问题, 不超出', async () => {
+        const btnDom = await page.$('#demo6 .testBtn');
+        await btnDom?.click();
+        await expect(page.$eval('#demo6 .demo .text', (dom: any) => dom.innerHTML)).resolves.toMatch(
+            '李明明',
+        );
+    });
+
+    it('\\ufeff问题, 超出', async () => {
+        const btnDom = await page.$('#demo7 .testBtn');
+        await btnDom?.click();
+        await expect(page.$eval('#demo7 .demo .text', (dom: any) => dom.innerHTML)).resolves.toMatch(
+            '李明明看塞饭ask来几发三扥框架啊三菱单发龙坎扽领啊囧扽送开间房矿...',
+        );
+    });
+
+    it('\\n换行符问题, 超出', async () => {
+        const btnDom = await page.$('#demo8 .testBtn');
+        await btnDom?.click();
+        await expect(page.$eval('#demo8 .demo .text', (dom: any) => dom.innerText)).resolves.toMatch(
+            '三定烦啊塞饭塞很就好 sdjfksjdf s粉色开间房 死开惊风散放散阀s森警...',
+        );
+    });
+
     afterAll(async () => {
         await browser.close();
     });

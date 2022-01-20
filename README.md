@@ -31,10 +31,12 @@ HTML
   <span class="tag">标签</span>
 </div>
 <script>
+  // TIPS: 赋值的时候禁用innerText，innerText会把 \n 转化为<br>标签
   var text = '这是一段只要两行的测试文案';
-  text1.innerText = text;
+  text1.append(text);
   var c = window.getMultilineText({ dom: demo1, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
-  text1.innerText = c;
+  text1.innerHTML = '';
+  text1.append(c);
 </script>
 ```
 

@@ -11,8 +11,17 @@
 
         <div id="demo1">
             <style>
-                #demo1 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
-                #demo1 .tag {padding: 0 2px;font-size: 14px;background-color: chartreuse;}
+                #demo1 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
+                #demo1 .tag {
+                    padding: 0 2px;
+                    font-size: 14px;
+                    background-color: chartreuse;
+                }
             </style>
             <button class="testBtn">最大3行，实际2行，标签需要紧跟文字</button>
 
@@ -26,19 +35,29 @@
                     const text = '这是一段只要两行的测试文案';
                     const demoDom = document.querySelector('#demo1 .demo');
                     const textDom = document.querySelector('#demo1 .demo .text');
-                    textDom.innerText = text;
+                    textDom.append(text);
                     document.querySelector('#demo1 .testBtn ').onclick = () => {
                         var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
-                        textDom.innerText = c;
-                    }
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
                 })();
             </script>
         </div>
 
         <div id="demo2">
             <style>
-                #demo2 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
-                #demo2 .tag {padding: 0 2px;font-size: 14px;background-color: chartreuse;}
+                #demo2 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
+                #demo2 .tag {
+                    padding: 0 2px;
+                    font-size: 14px;
+                    background-color: chartreuse;
+                }
             </style>
             <button class="testBtn">测试文案超过3行的情况，增加省略并显示标签</button>
 
@@ -52,20 +71,29 @@
                     const text = '这是一段明显超出了很多字的测试文案已经超过了很多很多很多了，我自己也不知道是多少';
                     const demoDom = document.querySelector('#demo2 .demo');
                     const textDom = document.querySelector('#demo2 .demo .text');
-                    textDom.innerText = text;
+                    textDom.append(text);
                     document.querySelector('#demo2 .testBtn').onclick = () => {
                         var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
-                        textDom.innerText = c;
-                    }
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
                 })();
             </script>
         </div>
 
-
         <div id="demo3">
             <style>
-                #demo3 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
-                #demo3 .tag {padding: 0 2px;font-size: 14px;background-color: chartreuse;}
+                #demo3 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
+                #demo3 .tag {
+                    padding: 0 2px;
+                    font-size: 14px;
+                    background-color: chartreuse;
+                }
             </style>
             <button class="testBtn">测试文案是英文且超过3行的情况，增加省略并显示标签</button>
 
@@ -79,18 +107,24 @@
                     const text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello';
                     const demoDom = document.querySelector('#demo3 .demo');
                     const textDom = document.querySelector('#demo3 .demo .text');
-                    textDom.innerText = text;
+                    textDom.append(text);
                     document.querySelector('#demo3 .testBtn').onclick = () => {
                         var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 32, ellipsis: true });
-                        textDom.innerText = c;
-                    }
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
                 })();
             </script>
         </div>
 
         <div id="demo4">
             <style>
-                #demo4 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
+                #demo4 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
             </style>
             <button class="testBtn">测试文案超过3行的情况，没有标签的情况</button>
 
@@ -103,35 +137,141 @@
                     const text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello';
                     const demoDom = document.querySelector('#demo4 .demo');
                     const textDom = document.querySelector('#demo4 .demo .text');
-                    textDom.innerText = text;
+                    textDom.append(text);
                     document.querySelector('#demo4 .testBtn').onclick = () => {
                         var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
-                        textDom.innerText = c;
-                    }
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
                 })();
             </script>
         </div>
 
         <div id="demo5">
             <style>
-                #demo5 .demo {width: 180px;max-height: 66px;overflow: hidden;background-color: blanchedalmond;}
+                #demo5 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
             </style>
-            <button class="testBtn">前面有占据的情况</button>
+            <button class="testBtn">前面有占据的情况，超出</button>
 
             <div class="demo">
-                <span>LINK123</span><span class="text"></span>
+                <span>LINK123</span>
+                <span class="text"></span>
             </div>
 
             <script>
                 (() => {
-                    const text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello';
+                    const text = 'hello hello hello hello hello hello hello hello hello hello hello hello hello三三三三';
                     const demoDom = document.querySelector('#demo5 .demo');
                     const textDom = document.querySelector('#demo5 .demo .text');
-                    textDom.innerText = text;
+                    textDom.append(text);
                     document.querySelector('#demo5 .testBtn').onclick = () => {
-                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, headPlaceHolder: 61.38 ,tailPlaceHolder: 0, ellipsis: true });
-                        textDom.innerText = c;
-                    }
+                        var c = window.getMultilineText({
+                            dom: demoDom,
+                            text,
+                            maxHeight: 66,
+                            headPlaceHolder: 61.38,
+                            tailPlaceHolder: 0,
+                            ellipsis: true,
+                        });
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
+                })();
+            </script>
+        </div>
+
+        <div id="demo6">
+            <style>
+                #demo6 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
+            </style>
+            <button class="testBtn">\ufeff问题, 不超出</button>
+
+            <div class="demo">
+                <span class="text"></span>
+            </div>
+
+            <script>
+                (() => {
+                    const text = '﻿李明明';
+                    const demoDom = document.querySelector('#demo6 .demo');
+                    const textDom = document.querySelector('#demo6 .demo .text');
+                    textDom.append(text);
+                    document.querySelector('#demo6 .testBtn').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
+                })();
+            </script>
+        </div>
+
+        <div id="demo7">
+            <style>
+                #demo7 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
+            </style>
+            <button class="testBtn">\ufeff问题, 超出</button>
+
+            <div class="demo">
+                <span class="text"></span>
+            </div>
+
+            <script>
+                (() => {
+                    const text =
+                        '﻿李明明看塞饭ask来几发三扥框架啊三菱单发龙坎扽领啊囧扽送开间房矿撒旦法零结案赛铃烦啊龙凯解放啦空单发送开间房领啊三扥看暗色零担茯苓啊囧扽看啊塞饭';
+                    const demoDom = document.querySelector('#demo7 .demo');
+                    const textDom = document.querySelector('#demo7 .demo .text');
+                    textDom.append(text);
+                    document.querySelector('#demo7 .testBtn').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
+                })();
+            </script>
+        </div>
+
+        <div id="demo8">
+            <style>
+                #demo8 .demo {
+                    width: 180px;
+                    max-height: 66px;
+                    overflow: hidden;
+                    background-color: blanchedalmond;
+                }
+            </style>
+            <button class="testBtn">\n换行符问题, 超出</button>
+
+            <div class="demo">
+                <span class="text"></span>
+            </div>
+
+            <script>
+                (() => {
+                    const text = '三定烦啊塞饭塞很就好\nsdjfksjdf\ns粉色开间房\n死开惊风散放散阀\s森警三分零散发\n锁扽欧城王超秒';
+                    const demoDom = document.querySelector('#demo8 .demo');
+                    const textDom = document.querySelector('#demo8 .demo .text');
+                    textDom.append(text);
+                    document.querySelector('#demo8 .testBtn').onclick = () => {
+                        var c = window.getMultilineText({ dom: demoDom, text, maxHeight: 66, tailPlaceHolder: 0, ellipsis: true });
+                        textDom.innerText = '';
+                        textDom.append(c);
+                    };
                 })();
             </script>
         </div>

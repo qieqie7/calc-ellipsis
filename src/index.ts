@@ -147,13 +147,15 @@ interface IParams {
 }
 
 export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder = 0, tailPlaceHolder = 0, ellipsis }: IParams): string {
+    // NOTE: 部分华为手机富文本编辑的时候，会在头部加入 \ufeff
+    const _text = text[0] === "\ufeff" ? text.slice(1) : text;
     try {
         const parentDom = dom.parentElement;
         if (!parentDom) {
             throw new Error(`当前dom无法处理，无父级元素`);
         }
 
-        let result = text;
+        let result = _text;
         const rect = dom.getBoundingClientRect();
 
         if (headPlaceHolder > rect.width) {
@@ -167,10 +169,10 @@ export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder
         const cloneDom = createCloneDom(dom, rect.width);
         parentDom.appendChild(cloneDom);
 
-        result = getFinallyText(cloneDom, text, rect.width, maxHeight, headPlaceHolder, tailPlaceHolder);
+        result = getFinallyText(cloneDom, _text, rect.width, maxHeight, headPlaceHolder, tailPlaceHolder);
 
         // 如果文字超长了
-        if (ellipsis && result.trim() !== text.trim()) {
+        if (ellipsis && result.trim() !== _text.trim()) {
             let ellipsisPlaceHolder: number = 0;
             if (ellipsis) {
                 const cloneDom = createCloneDom(dom);
@@ -188,7 +190,7 @@ export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder
                 );
             }
 
-            result = getFinallyText(cloneDom, text, rect.width, maxHeight, headPlaceHolder, tailPlaceHolderWithEllipsis) + '...';
+            result = getFinallyText(cloneDom, _text, rect.width, maxHeight, headPlaceHolder, tailPlaceHolderWithEllipsis) + '...';
         }
 
         parentDom.removeChild(cloneDom);
@@ -200,6 +202,6 @@ export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder
         } else {
             console.warn('未知错误');
         }
-        return text;
+        return _text;
     }
 }
