@@ -46,7 +46,8 @@ HTML
 |  ----  | ----  | ---- |
 | dom  | HTMLElement | 包裹文字和标签的dom，相关的文字样式建议卸载外层，这个dom会被复制，计算字体 |
 | text  | string | 需要计算的文案 |
-| maxHeight  | number | 容器的最大高度 |
+| maxHeight  | number | 容器的最大高度（准备废弃） |
+| maxLine  | number | 容器的最大行数 |
 | headPlaceHolder  | number | 头部标签占据的宽度，不能超过单行宽度，注意：在写原生HTML的时候，行内元素换行可能会产生额外的距离 |
 | tailPlaceHolder  | number | 尾部标签占据的宽度，不能超过单行宽度 |
 | ellipsis  | bool \| undefined | 是否显示 ... |

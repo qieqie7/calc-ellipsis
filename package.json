@@ -1,6 +1,6 @@
 {
     "name": "get-multiline-text",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "Multi-line text wrap and omit",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
