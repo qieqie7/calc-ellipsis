@@ -4,7 +4,6 @@ function createCloneDom(dom: HTMLElement, width?: number): HTMLElement {
     let styleStr = oldStyleStr;
     styleStr += 'position: fixed;';
     styleStr += 'top: 0;';
-    styleStr += 'bottom: 0;';
     styleStr += 'left: 0;';
     styleStr += 'z-index: 1000000;';
     styleStr += 'opacity: 0;';
@@ -87,25 +86,18 @@ function getText({ start, end }: IPositionInfo): string {
     return result;
 }
 
-function getFinallyText(dom: HTMLElement, text: string, width: number, height: number, headPlaceHolder: number, tailPlaceHolder: number): string {
+function getFinallyText(dom: HTMLElement, text: string, width: number, height: number, headPlaceHolderDom: HTMLElement | undefined, tailPlaceHolder: number): string {
     let result = text;
-    const startX = 0;
-    const startY = 0;
-    const endX = width - tailPlaceHolder;
-    const endY = height - 1;
-
-    let headPlaceHolderDom;
-    if(headPlaceHolder) {
-        headPlaceHolderDom = document.createElement('cus-ph-span');
-        let styleStr = '';
-        styleStr += 'display: inline-block;';
-        styleStr += `width: ${headPlaceHolder}px;`;
-        headPlaceHolderDom.setAttribute('style', styleStr);
-    }
 
     dom.innerHTML = '';
     headPlaceHolderDom && dom.append(headPlaceHolderDom);
     dom.append(text);
+
+    const startX = 0;
+    const startY = 0;
+    const endX = width - tailPlaceHolder;
+    const endY = height;
+
     const position1 = getPositionInfo(startX, startY, endX, endY);
     const result1 = getText(position1);
 
@@ -131,7 +123,17 @@ function getFinallyText(dom: HTMLElement, text: string, width: number, height: n
 interface IParams {
     dom: HTMLElement;
     text: string;
-    maxHeight: number;
+    /** 
+     * @deprecated 
+     * 尽快切换到 maxLine
+     * 下一个版本会被弃用
+     */
+    maxHeight?: number;
+    /**
+     * 最大行数
+     * 优先级更高，回覆盖maxHeight
+     */
+    maxLine?: number; 
     /**
      * 是否使用省略号
      */
@@ -146,17 +148,34 @@ interface IParams {
     tailPlaceHolder?: number;
 }
 
-export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder = 0, tailPlaceHolder = 0, ellipsis }: IParams): string {
+export default function getMultilineText({ dom, text, maxHeight, maxLine, headPlaceHolder = 0, tailPlaceHolder = 0, ellipsis }: IParams): string {
     // NOTE: 部分华为手机富文本编辑的时候，会在头部加入 \ufeff
-    const _text = text[0] === "\ufeff" ? text.slice(1) : text;
+    const _text = text.replace(/\ufeff/g, '');
     try {
+        /** ------ CHECK 传入的值是否符合要求 start ------ */
+        const domCssObj = window.getComputedStyle(dom);
+        const rect = dom.getBoundingClientRect();
+
+        const lineHeight = Number.parseFloat(domCssObj.getPropertyValue('line-height'));
+        if(Number.isNaN(lineHeight)) {
+            throw new Error(`传入的DOM请显示明确line-height的高度`);
+        }
+        
+        let _maxHeight;
+        if(typeof maxHeight === 'number') {
+            _maxHeight = maxHeight;
+        }
+        if(typeof maxLine === 'number') {
+            _maxHeight = maxLine * lineHeight;
+        }
+        if(!_maxHeight) {
+            throw new Error(`maxHeight 或者 maxLine 一定要有一个值，如果你传入的是0，就麻烦你改一改，求求你了`);
+        }
+
         const parentDom = dom.parentElement;
         if (!parentDom) {
             throw new Error(`当前dom无法处理，无父级元素`);
         }
-
-        let result = _text;
-        const rect = dom.getBoundingClientRect();
 
         if (headPlaceHolder > rect.width) {
             throw new Error(`headPlaceHolder(${headPlaceHolder})应该小于dom的宽度(${rect.width})。`);
@@ -165,11 +184,49 @@ export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder
         if (tailPlaceHolder > rect.width) {
             throw new Error(`tailPlaceHolder(${tailPlaceHolder})应该小于dom的宽度(${rect.width})。`);
         }
+        /** ------ CHECK 传入的值是否符合要求 end ------ */
 
+        let result = _text;
         const cloneDom = createCloneDom(dom, rect.width);
-        parentDom.appendChild(cloneDom);
 
-        result = getFinallyText(cloneDom, _text, rect.width, maxHeight, headPlaceHolder, tailPlaceHolder);
+        let headPlaceHolderDom;
+        if(headPlaceHolder) {
+            headPlaceHolderDom = document.createElement('cus-ph-span');
+            let styleStr = '';
+            styleStr += 'display: inline-block;';
+            styleStr += `width: ${headPlaceHolder}px;`;
+            headPlaceHolderDom.setAttribute('style', styleStr);
+        }
+
+        // NOTE: windows 端有一个问题
+        /**
+         * [text text text text text text text ]
+         * |                           .       |
+         * 上面的点代表（endX，endY） 点
+         * 这个点 mac浏览器返回的是 全部选中的结果
+         * windows 返回的值 只到 text text text text text tex，与我选中全部的本意是不相符合的
+         * 需要做一个兼容
+         */
+
+        // 需要计算一下是否需要展示 ... 
+        // 标准是 当实际渲染的高度 + lineHeight <= maxHeight 
+        // 则不需要显示 ...  直接返回就可以
+        let oldCloneDomCss = cloneDom.getAttribute('style') || '';
+        cloneDom.style.height = 'auto';
+        headPlaceHolderDom && cloneDom.append(headPlaceHolderDom);
+        cloneDom.append(text);
+        parentDom.appendChild(cloneDom);
+        const rectWithoutHeight = cloneDom.getBoundingClientRect();
+        if(rectWithoutHeight.height + lineHeight <= _maxHeight) {
+            parentDom.removeChild(cloneDom);
+            return result;
+        }
+
+        // 可能存在需要展示 ... 的情况
+        oldCloneDomCss += 'bottom: 0;';
+        cloneDom.setAttribute('style', oldCloneDomCss);
+
+        result = getFinallyText(cloneDom, _text, rect.width, _maxHeight, headPlaceHolderDom, tailPlaceHolder);
 
         // 如果文字超长了
         if (ellipsis && result.trim() !== _text.trim()) {
@@ -190,7 +247,7 @@ export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder
                 );
             }
 
-            result = getFinallyText(cloneDom, _text, rect.width, maxHeight, headPlaceHolder, tailPlaceHolderWithEllipsis) + '...';
+            result = getFinallyText(cloneDom, _text, rect.width, _maxHeight, headPlaceHolderDom, tailPlaceHolderWithEllipsis) + '...';
         }
 
         parentDom.removeChild(cloneDom);
@@ -198,9 +255,9 @@ export default function getMultilineText({ dom, text, maxHeight, headPlaceHolder
         return result;
     } catch (error: unknown) {
         if (error instanceof Error) {
-            console.warn(error.message);
+            console.error('GET_MULTILINE_TEXT - ', error.message);
         } else {
-            console.warn('未知错误');
+            console.error('GET_MULTILINE_TEXT - ', '未知错误');
         }
         return _text;
     }

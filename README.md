@@ -18,6 +18,8 @@ HTML
     max-height: 66px;
     overflow: hidden;
     background-color: blanchedalmond;
+    /* 不论是内联还是class形式 line-height 都必须显示的注明在最外层的容器上 */
+    line-height: 22px;
   }
 
   .tag {

@@ -16,6 +16,7 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
                 #demo1 .tag {
                     padding: 0 2px;
@@ -32,7 +33,7 @@
 
             <script>
                 (() => {
-                    const text = '这是一段只要两行的测试文案';
+                    const text = '这是一段只要两行的测';
                     const demoDom = document.querySelector('#demo1 .demo');
                     const textDom = document.querySelector('#demo1 .demo .text');
                     textDom.append(text);
@@ -52,6 +53,7 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
                 #demo2 .tag {
                     padding: 0 2px;
@@ -88,6 +90,7 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
                 #demo3 .tag {
                     padding: 0 2px;
@@ -98,8 +101,7 @@
             <button class="testBtn">测试文案是英文且超过3行的情况，增加省略并显示标签</button>
 
             <div class="demo">
-                <span class="text"></span>
-                <span class="tag">标签</span>
+                <span class="text"></span><span class="tag">标签</span>
             </div>
 
             <script>
@@ -124,6 +126,7 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
             </style>
             <button class="testBtn">测试文案超过3行的情况，没有标签的情况</button>
@@ -154,13 +157,14 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
             </style>
             <button class="testBtn">前面有占据的情况，超出</button>
 
             <div class="demo">
-                <span>LINK123</span>
-                <span class="text"></span>
+                <!-- 这里不能分两行写，span与span标签会有空隙 -->
+                <span>LINK123</span><span class="text"></span>
             </div>
 
             <script>
@@ -192,6 +196,7 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
             </style>
             <button class="testBtn">\ufeff问题, 不超出</button>
@@ -222,6 +227,7 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
             </style>
             <button class="testBtn">\ufeff问题, 超出</button>
@@ -253,6 +259,7 @@
                     max-height: 66px;
                     overflow: hidden;
                     background-color: blanchedalmond;
+                    line-height: 22px;
                 }
             </style>
             <button class="testBtn">\n换行符问题, 超出</button>

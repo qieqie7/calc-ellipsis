@@ -7,7 +7,10 @@ describe('e2e', () => {
     
     beforeAll(async () => {
         // NOTE: 裂开，headless 设置成 false 测试用例有的跑不过去
-        browser = await puppeteer.launch({headless: false});
+        browser = await puppeteer.launch({
+            headless: false,
+            slowMo: 100
+        });
         page = await browser.newPage();
         await page.goto(`file://${path.resolve(__dirname, 'index.html')}`);
     });
@@ -16,7 +19,7 @@ describe('e2e', () => {
         const btnDom = await page.$('#demo1 .testBtn');
         await btnDom?.click();
 
-        await expect(page.$eval('#demo1 .demo .text', dom => dom.innerHTML)).resolves.toMatch('这是一段只要两行的测试文案');
+        await expect(page.$eval('#demo1 .demo .text', dom => dom.innerHTML)).resolves.toMatch('这是一段只要两行的测');
     });
 
     it('超过3行，有标签', async () => {
