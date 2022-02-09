@@ -36,7 +36,8 @@ function getPositionInfo(_startX: number, _startY: number, _endX: number, _endY:
     const startX = _startX + 1;
     const startY = _startY + 1;
     const endX = _endX - 1;
-    const endY = _endY - 1;
+    // safari 外部容器上下回留白一点
+    const endY = _endY - 3;
 
     if (document.caretRangeFromPoint) {
         const start = document.caretRangeFromPoint(startX, startY);
